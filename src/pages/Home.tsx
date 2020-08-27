@@ -17,9 +17,6 @@ import {
   IonCardHeader,
   IonFab,
   IonFabButton,
-  IonImg,
-  IonAvatar,
-  IonRouterLink,
 } from "@ionic/react";
 import React from "react";
 import "./Home.css";
@@ -36,11 +33,12 @@ import { faTruck, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
 
 const Home: React.FC = () => {
+
   return (
-    <IonPage>
+    <IonPage className="dashboard-page">
       <IonHeader>
         <IonToolbar>
-          <IonItem mode="md" lines="none">
+          <IonItem mode="md" lines="none" color="deliveryboy">
             <IonTitle>Dashboard</IonTitle>
             <IonButtons>
               <IonButton fill="clear" size="small" mode="ios">
@@ -49,10 +47,11 @@ const Home: React.FC = () => {
               <IonButton fill="clear" size="small" mode="ios">
                 <IonIcon slot="end" icon={notificationIcon} />
               </IonButton>
-              <IonButton fill="clear" size="small" mode="ios" href="/profile">
+              <IonButton fill="clear" size="small" mode="ios" routerLink="./profile">
                 <IonIcon slot="end" icon={profileIcon} />
               </IonButton>
             </IonButtons>
+            
           </IonItem>
         </IonToolbar>
       </IonHeader>
@@ -60,7 +59,7 @@ const Home: React.FC = () => {
         <IonGrid className="ion-padding">
           <IonRow>
             <IonCol size="6">
-              <IonCard button mode="md" color="primary">
+              <IonCard button mode="md" color="primary" routerLink="./delivery">
                 <IonCardHeader>
                   <IonCardTitle className="card-font">
                     <FontAwesomeIcon icon={faTruck} /> Delivery

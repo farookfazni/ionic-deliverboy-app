@@ -254,3 +254,7 @@ http://ionicframework.com/docs/theming/ */
   }
 }
 
+.dashboard-page{
+  --ion-background-color:whitesmoke;
+  --ion-toolbar-background: #2867a9;
+}
