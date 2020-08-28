@@ -40,7 +40,7 @@ const Delivery: React.FC = () => {
         <IonList color="dark" mode="ios">
           <IonItem color="dark" mode="ios" ><strong>To be Delivered</strong></IonItem>
         </IonList>
-        <IonCard color="dark" button routerLink="./entrypage">
+        <IonCard color="dark" button routerLink="./deliveryentrypage">
           <IonCardHeader>
             <IonGrid>
               <IonRow>

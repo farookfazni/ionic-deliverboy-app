@@ -81,7 +81,7 @@ const Home: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol size="6">
-              <IonCard button mode="md" color="warning">
+              <IonCard button mode="md" color="warning" routerLink="./holdpage">
                 <IonCardHeader>
                   <IonCardTitle className="card-font">
                     <IonIcon icon={holdIcon} /> Hold

@@ -13,46 +13,51 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonTitle,
-  IonButton,
-  IonLabel,
   IonList,
   IonItem,
-  IonCardContent,
+  IonTitle,
+  IonButton,
   IonItemSliding,
+  IonLabel,
   IonItemOptions,
   IonItemOption,
+  IonCardContent,
   IonActionSheet,
 } from "@ionic/react";
 import React, { useState } from "react";
 import "./Home.css";
-import { 
-  location as locationIcon, 
+import {
+  location as locationIcon,
   call as callIcon,
   trash,
   pause as holdIcon,
   bicycle as deliveryIcon,
   returnUpBack as returnIcon,
   close as closeIcon,
- } from "ionicons/icons";
-import { } from "@fortawesome/react-fontawesome";
-import { } from "@fortawesome/free-solid-svg-icons";
+} from "ionicons/icons";
+import {} from "@fortawesome/react-fontawesome";
+import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
 
-const EntryPge: React.FC = () => {
+const HoldPage: React.FC = () => {
   const [showActionSheet, setShowActionSheet] = useState(false);
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/delivery" />
+            <IonBackButton defaultHref="/home" />
           </IonButtons>
-          <IonTitle></IonTitle>
+          <IonTitle>Deliveries On Hold</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
+        <IonList color="dark" mode="ios">
+          <IonItem color="warning" mode="ios">
+            <strong>On Hold</strong>
+          </IonItem>
+        </IonList>
         <IonCard color="dark">
           <IonCardHeader>
             <IonGrid>
@@ -112,15 +117,24 @@ const EntryPge: React.FC = () => {
                   </h2>
                 </IonLabel>
               </IonItem>
+              <IonItem color="dark" mode="ios">
+                <IonLabel mode="ios">
+                  <p style={{ fontSize: 10 }}>Reason for Hold :</p>
+                  <h2>
+                    <strong>Customer is Not Answering Phone</strong>
+                  </h2>
+                </IonLabel>
+              </IonItem>
             </IonList>
 
+            <IonButton fill="solid" expand="block" routerLink="./holdentrypage">Update Reason</IonButton>
             <IonButton
               fill="solid"
               expand="block"
               color="color1"
               onClick={() => setShowActionSheet(true)}
             >
-              Set Status
+              Update Status
             </IonButton>
             <IonActionSheet
               isOpen={showActionSheet}
@@ -172,4 +186,4 @@ const EntryPge: React.FC = () => {
   );
 };
 
-export default EntryPge;
+export default HoldPage;
