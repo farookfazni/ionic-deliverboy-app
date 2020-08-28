@@ -26,7 +26,7 @@ import "../theme/custom.css";
 
 const Profile: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage className="profile-page">
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">

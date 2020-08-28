@@ -22,15 +22,25 @@ import {
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
+  IonActionSheet,
 } from "@ionic/react";
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
-import { location as locationIcon, call as callIcon } from "ionicons/icons";
-import {} from "@fortawesome/react-fontawesome";
-import {} from "@fortawesome/free-solid-svg-icons";
+import { 
+  location as locationIcon, 
+  call as callIcon,
+  trash,
+  pause as holdIcon,
+  bicycle as deliveryIcon,
+  returnUpBack as returnIcon,
+  close as closeIcon,
+ } from "ionicons/icons";
+import { } from "@fortawesome/react-fontawesome";
+import { } from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
 
 const EntryPge: React.FC = () => {
+  const [showActionSheet, setShowActionSheet] = useState(false);
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
@@ -104,9 +114,57 @@ const EntryPge: React.FC = () => {
               </IonItem>
             </IonList>
 
-            <IonButton fill="solid" expand="block" color="color1">
-              Delivered
+            <IonButton
+              fill="solid"
+              expand="block"
+              color="color1"
+              onClick={() => setShowActionSheet(true)}
+            >
+              Set Status
             </IonButton>
+            <IonActionSheet
+              isOpen={showActionSheet}
+              onDidDismiss={() => setShowActionSheet(false)}
+              buttons={[
+                {
+                  text: "Delete",
+                  role: "destructive",
+                  icon: trash,
+                  handler: () => {
+                    console.log("Delete clicked");
+                  },
+                },
+                {
+                  text: "Delivered",
+                  icon: deliveryIcon,
+                  handler: () => {
+                    console.log("Delivered clicked");
+                  },
+                },
+                {
+                  text: "Hold",
+                  icon: holdIcon,
+                  handler: () => {
+                    console.log("Hold clicked");
+                  },
+                },
+                {
+                  text: "Return",
+                  icon: returnIcon,
+                  handler: () => {
+                    console.log("Return clicked");
+                  },
+                },
+                {
+                  text: "Cancel",
+                  icon: closeIcon,
+                  role: "cancel",
+                  handler: () => {
+                    console.log("Cancel clicked");
+                  },
+                },
+              ]}
+            ></IonActionSheet>
           </IonCardContent>
         </IonCard>
       </IonContent>
