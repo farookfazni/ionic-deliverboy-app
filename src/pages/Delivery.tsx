@@ -40,7 +40,7 @@ const Delivery: React.FC = () => {
         <IonList color="dark" mode="ios">
           <IonItem color="dark" mode="ios" ><strong>To be Delivered</strong></IonItem>
         </IonList>
-        <IonCard color="dark" button>
+        <IonCard color="dark" button routerLink="./entrypage">
           <IonCardHeader>
             <IonGrid>
               <IonRow>
@@ -72,7 +72,7 @@ const Delivery: React.FC = () => {
                     <strong>Miss Arya Stark.</strong>
                   </IonCardTitle>
                   <IonCardSubtitle mode="md">
-                    122B Westros,Winterfell
+                    122B Winterfell,Westros
                   </IonCardSubtitle>
                 </IonCol>
                 <IonCol size="2">
