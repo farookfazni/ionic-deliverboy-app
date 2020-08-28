@@ -31,8 +31,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
+import { useHistory } from "react-router";
 
 const Home: React.FC = () => {
+  const history = useHistory();
+  const handleRefresh = () =>{
+    history.go(0);
+  }
 
   return (
     <IonPage className="dashboard-page">
@@ -41,7 +46,7 @@ const Home: React.FC = () => {
           <IonItem mode="md" lines="none" color="deliveryboy">
             <IonTitle>Dashboard</IonTitle>
             <IonButtons>
-              <IonButton fill="clear" size="small" mode="ios">
+              <IonButton fill="clear" size="small" mode="ios" onClick={handleRefresh}>
                 <IonIcon slot="end" icon={refreshIcon} />
               </IonButton>
               <IonButton fill="clear" size="small" mode="ios">
