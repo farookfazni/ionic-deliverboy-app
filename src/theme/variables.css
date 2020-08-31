@@ -187,7 +187,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
 
-    --ion-color-deliverboy: #2867a9;
+    --ion-color-deliverboy: rgb(40, 102, 169);
     --ion-color-deliverboy-rgb: 40,103,169;
     --ion-color-deliverboy-contrast: #ffffff;
     --ion-color-deliverboy-contrast-rgb: 255,255,255;

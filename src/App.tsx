@@ -9,6 +9,8 @@ import DeliveryEntryPge from './pages/DeliveryEntryPage';
 import HoldPage from './pages/HoldPage';
 import HoldEntryPge from './pages/HoldEntryPage';
 
+import LoginPage from './pages/LoginPage';
+
 
 const App: React.FC = () => (
   <IonApp>
@@ -19,6 +21,7 @@ const App: React.FC = () => (
         <Route exact path="/delivery" ><Delivery/></Route>
         <Route exact path="/deliveryentrypage" ><DeliveryEntryPge/></Route>
         <Route exact path="/holdpage" ><HoldPage/></Route>
+        <Route exact path="/loginpage" ><LoginPage/></Route>
         <Route exact path="/holdentrypage" ><HoldEntryPge/></Route>
         <Route exact path="/" render={() => <Redirect to="/home" />} />
       </IonRouterOutlet>

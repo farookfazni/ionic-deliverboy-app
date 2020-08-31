@@ -20,4 +20,39 @@
 .profile-list {
   padding-top: 50px;
 }
-
+.ion-slides {
+  height: 100%;
+  background-color: var(--ion-color-deliverboy);
+}
+.logo-img {
+  display: flex;
+}
+.welcome-text {
+  margin: 0;
+  font-weight: 900;
+  font-size: 30px;
+  font-family: Open Sans sans-serif;
+  color: whitesmoke;
+}
+.login-top {
+  height: 40%;
+  background-color: whitesmoke;
+}
+.login-title {
+  margin: 0;
+  font-weight: 900;
+  font-family: Open Sans sans-serif;
+  text-align: center;
+}
+.login-item {
+  font-size: 30px;
+}
+.loginpage-up{
+  background-color: var(--ion-color-deliverboy);
+  height: 40%;
+}
+.loginpage-up-img{
+  padding-top: 20px;
+  height: 80%;
+  opacity: 0.8;
+}

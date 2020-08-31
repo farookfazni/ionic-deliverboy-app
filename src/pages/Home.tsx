@@ -49,7 +49,7 @@ const Home: React.FC = () => {
               <IonButton fill="clear" size="small" mode="ios" onClick={handleRefresh}>
                 <IonIcon slot="end" icon={refreshIcon} />
               </IonButton>
-              <IonButton fill="clear" size="small" mode="ios">
+              <IonButton fill="clear" size="small" mode="ios" routerLink="./welcomepage">
                 <IonIcon slot="end" icon={notificationIcon} />
               </IonButton>
               <IonButton fill="clear" size="small" mode="ios" routerLink="./profile">
