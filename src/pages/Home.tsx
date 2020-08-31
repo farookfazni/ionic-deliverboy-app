@@ -17,6 +17,7 @@ import {
   IonCardHeader,
   IonFab,
   IonFabButton,
+  IonBadge,
 } from "@ionic/react";
 import React from "react";
 import "./Home.css";
@@ -46,14 +47,15 @@ const Home: React.FC = () => {
           <IonItem mode="md" lines="none" color="deliveryboy">
             <IonTitle>Dashboard</IonTitle>
             <IonButtons>
-              <IonButton fill="clear" size="small" mode="ios" onClick={handleRefresh}>
-                <IonIcon slot="end" icon={refreshIcon} />
+              <IonButton  fill="clear" size="small"  onClick={handleRefresh}>
+                <IonIcon slot="icon-only" icon={refreshIcon} />
               </IonButton>
-              <IonButton fill="clear" size="small" mode="ios" routerLink="./welcomepage">
-                <IonIcon slot="end" icon={notificationIcon} />
+              <IonButton id="notification-btn" fill="clear" size="small"  routerLink="./notificationpage">
+                <IonIcon slot="icon-only" icon={notificationIcon} />
+                <IonBadge id="notification-badge" color="danger">1</IonBadge>
               </IonButton>
-              <IonButton fill="clear" size="small" mode="ios" routerLink="./profile">
-                <IonIcon slot="end" icon={profileIcon} />
+              <IonButton fill="clear" size="small"  routerLink="./profile">
+                <IonIcon slot="icon-only" icon={profileIcon} />
               </IonButton>
             </IonButtons>
             

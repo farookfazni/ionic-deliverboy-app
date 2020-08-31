@@ -47,15 +47,25 @@
 .login-item {
   font-size: 30px;
 }
-.loginpage-up{
+.loginpage-up {
   background-color: var(--ion-color-deliverboy);
   height: 40%;
 }
-.loginpage-up-img{
+.loginpage-up-img {
   padding-top: 20px;
   height: 80%;
   opacity: 0.8;
 }
-.logintitle{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.logintitle {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+#notification-btn {
+  position: relative;
+  
+}
+
+#notification-badge {
+  position: absolute;
+  top: -10px;
+  right: 10px;
 }
