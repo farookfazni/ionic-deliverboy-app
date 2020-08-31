@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
           <IonImg className="loginpage-up-img" src="./assets/deliveryboy.png" />
           <IonCard color="dark" mode="ios">
             <IonCardHeader>
-              <IonCardTitle>Login</IonCardTitle>
+              <IonCardTitle className="logintitle">Login</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
               <IonItem color="dark">
