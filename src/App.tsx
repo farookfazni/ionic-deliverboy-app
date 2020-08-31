@@ -10,6 +10,7 @@ import HoldPage from './pages/HoldPage';
 import HoldEntryPge from './pages/HoldEntryPage';
 import LoginPage from './pages/LoginPage';
 import NotificationPage from './pages/NotificationPage';
+import ChatPage from './pages/ChatPage';
 
 
 const App: React.FC = () => (
@@ -22,6 +23,7 @@ const App: React.FC = () => (
         <Route exact path="/deliveryentrypage" ><DeliveryEntryPge/></Route>
         <Route exact path="/holdpage" ><HoldPage/></Route>
         <Route exact path="/loginpage" ><LoginPage/></Route>
+        <Route exact path="/chatpage" ><ChatPage/></Route>
         <Route exact path="/notificationpage" ><NotificationPage/></Route>
         <Route exact path="/holdentrypage" ><HoldEntryPge/></Route>
         <Route exact path="/" render={() => <Redirect to="/home" />} />

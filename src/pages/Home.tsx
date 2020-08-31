@@ -111,7 +111,7 @@ const Home: React.FC = () => {
         </IonGrid>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton>
+          <IonFabButton routerLink="./chatpage">
             <IonIcon icon={chatIcon} />
           </IonFabButton>
         </IonFab>
