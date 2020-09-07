@@ -11,6 +11,7 @@ import {
   IonItem,
   IonLabel,
   IonIcon,
+  IonButton,
 } from "@ionic/react";
 import React from "react";
 import "./Home.css";
@@ -19,6 +20,7 @@ import {
   call as callIcon,
   water as bloodIcon,
   mail as mailIcon,
+  pencil as editIcon,
  } from "ionicons/icons";
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +32,7 @@ const Profile: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" />
+            <IonBackButton defaultHref="/my/home" />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -40,6 +42,9 @@ const Profile: React.FC = () => {
           <IonAvatar>
             <IonImg src="/assets/Me.jpg" />
           </IonAvatar>
+          <IonButton fill="clear" mode="ios">
+            <IonIcon className="profile-edit-icon" slot="icon-only" icon={editIcon} size="small" color="dark"/>
+          </IonButton>
         </div>
 
         <div className="dashboard">

@@ -46,7 +46,7 @@ const HoldPage: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" />
+            <IonBackButton defaultHref="/my/home" />
           </IonButtons>
           <IonTitle>Deliveries On Hold</IonTitle>
         </IonToolbar>

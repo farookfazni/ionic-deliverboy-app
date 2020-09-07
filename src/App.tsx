@@ -1,35 +1,38 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-import Profile from './pages/Profile';
-import Delivery from './pages/Delivery';
-import DeliveryEntryPge from './pages/DeliveryEntryPage';
-import HoldPage from './pages/HoldPage';
-import HoldEntryPge from './pages/HoldEntryPage';
-import LoginPage from './pages/LoginPage';
-import NotificationPage from './pages/NotificationPage';
-import ChatPage from './pages/ChatPage';
+import React, { useState } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { IonApp } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import LoginPage from "./pages/LoginPage";
+import AppAuthPages from "./AppAuthPages";
+import { AuthContext } from "./auth";
+import NotFoundPage from "./pages/NotFoundPage";
 
-
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home" ><Home/></Route>
-        <Route exact path="/profile" ><Profile/></Route>
-        <Route exact path="/delivery" ><Delivery/></Route>
-        <Route exact path="/deliveryentrypage" ><DeliveryEntryPge/></Route>
-        <Route exact path="/holdpage" ><HoldPage/></Route>
-        <Route exact path="/loginpage" ><LoginPage/></Route>
-        <Route exact path="/chatpage" ><ChatPage/></Route>
-        <Route exact path="/notificationpage" ><NotificationPage/></Route>
-        <Route exact path="/holdentrypage" ><HoldEntryPge/></Route>
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  console.log(`rendering App with loggedIn=${loggedIn}`);
+  return (
+    <IonApp>
+      <AuthContext.Provider value={{loggedIn}}>
+        <IonReactRouter>
+          <Switch>
+            <Route exact path="/loginpage">
+              <LoginPage
+                loggedIn={loggedIn}
+                onlogin={() => setLoggedIn(true)}
+              />
+            </Route>
+            <Route path="/my">
+              <AppAuthPages />
+            </Route>
+            <Route exact path="/" render={() => <Redirect to="/my/home" />} />
+            <Route>
+              <NotFoundPage/>
+            </Route>
+          </Switch>
+        </IonReactRouter>
+      </AuthContext.Provider>
+    </IonApp>
+  );
+};
 
 export default App;

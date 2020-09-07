@@ -30,7 +30,7 @@ const Delivery: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" />
+            <IonBackButton defaultHref="/my/home" />
           </IonButtons>
           <IonTitle>Today's Deliveries</IonTitle>
         </IonToolbar>

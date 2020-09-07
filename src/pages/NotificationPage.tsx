@@ -16,6 +16,7 @@ import {
   IonList,
   IonItem,
   IonTitle,
+  IonButton,
 } from "@ionic/react";
 import React from "react";
 import "./Home.css";
@@ -30,7 +31,7 @@ const NotificationPage: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" />
+            <IonBackButton defaultHref="/my/home" />
           </IonButtons>
           <IonTitle>Notifications</IonTitle>
         </IonToolbar>
@@ -40,7 +41,7 @@ const NotificationPage: React.FC = () => {
         <IonList color="dark" mode="ios">
           <IonItem color="dark" mode="ios" ><strong>New Orders</strong></IonItem>
         </IonList>
-        <IonCard color="dark" button routerLink="./deliveryentrypage">
+        <IonCard color="dark">
           <IonCardHeader>
             <IonGrid>
               <IonRow>
@@ -57,6 +58,9 @@ const NotificationPage: React.FC = () => {
                 </IonCol>
               </IonRow>
             </IonGrid>
+            <IonButton expand="block">
+              Get The Order
+            </IonButton>
           </IonCardHeader>
         </IonCard>
       </IonContent>

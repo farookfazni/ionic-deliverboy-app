@@ -29,7 +29,7 @@ const HoldEntryPge: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/holdpage" />
+            <IonBackButton defaultHref="/my/holdpage" />
           </IonButtons>
           <IonTitle>Update Reason</IonTitle>
         </IonToolbar>

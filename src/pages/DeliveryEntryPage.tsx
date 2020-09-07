@@ -46,7 +46,7 @@ const DeliveryEntryPge: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/delivery" />
+            <IonBackButton defaultHref="/my/delivery" />
           </IonButtons>
           <IonTitle></IonTitle>
         </IonToolbar>

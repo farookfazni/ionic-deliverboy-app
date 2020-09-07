@@ -17,6 +17,7 @@
     "@ionic/react": "^5.3.1",
     "@ionic/react-router": "^5.0.7",
     "axios": "^0.20.0",
+    "firebase": "^7.19.1",
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

@@ -12,7 +12,6 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonLabel,
   IonButton,
 } from "@ionic/react";
 import React from "react";
@@ -28,7 +27,7 @@ const ChatPage: React.FC = () => {
       <IonHeader>
         <IonToolbar color="deliverboy">
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" />
+            <IonBackButton defaultHref="/my/home" />
           </IonButtons>
           <IonTitle>Chat</IonTitle>
         </IonToolbar>
