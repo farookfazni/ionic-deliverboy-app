@@ -22,23 +22,19 @@ import {
 import React from "react";
 import "./Home.css";
 import {
-  refresh as refreshIcon,
   notifications as notificationIcon,
   person as profileIcon,
   cardOutline as paymentIcon,
   pause as holdIcon,
   chatbox as chatIcon,
+  logOut as logoutIcon,
 } from "ionicons/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
-import { useHistory } from "react-router";
+import {auth} from '../firebase';
 
 const Home: React.FC = () => {
-  const history = useHistory();
-  const handleRefresh = () =>{
-    history.go(0);
-  }
 
   return (
     <IonPage className="dashboard-page">
@@ -47,8 +43,8 @@ const Home: React.FC = () => {
           <IonItem mode="md" lines="none" color="deliveryboy">
             <IonTitle>Dashboard</IonTitle>
             <IonButtons>
-              <IonButton  fill="clear" size="small"  onClick={handleRefresh}>
-                <IonIcon slot="icon-only" icon={refreshIcon} />
+              <IonButton  fill="clear" size="small"  onClick={()=> auth.signOut()}>
+                <IonIcon slot="icon-only" icon={logoutIcon} />
               </IonButton>
               <IonButton id="notification-btn" fill="clear" size="small"  routerLink="./notificationpage">
                 <IonIcon slot="icon-only" icon={notificationIcon} />

@@ -13,6 +13,7 @@ import {
   IonCardTitle,
   IonButton,
   IonText,
+  IonLoading,
 } from "@ionic/react";
 import React, { useState } from "react";
 import "./Home.css";
@@ -24,24 +25,21 @@ import { Redirect } from "react-router";
 import { useAuth } from "../auth";
 import { auth } from "../firebase";
 
-interface Proops {
-  loggedIn: boolean;
-  onlogin: () => void;
-}
 
-const LoginPage: React.FC<Proops> = ({ onlogin }) => {
+
+const LoginPage: React.FC = () => {
   const { loggedIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [ error, setError] = useState(false);
+  const [ status, setStatus] = useState({loading:false, error:false});
 
   const handlelogin = async () => {
     try {
+      setStatus({loading:true, error:false});
       const credintial = await auth.signInWithEmailAndPassword(email, password);
       console.log("credential:", credintial);
-      onlogin();
     } catch (err) {
-      setError(true);
+      setStatus({loading:false, error:true});
       console.log("error : ", err);
     }
   };
@@ -78,10 +76,11 @@ const LoginPage: React.FC<Proops> = ({ onlogin }) => {
                   onIonChange={(event) => setPassword(event.detail.value)}
                 />
               </IonItem>
-              {error && <IonText color="danger">Invalid credential</IonText>}
+              {status.error && <IonText color="danger">Invalid credential</IonText>}
               <IonButton expand="block" onClick={handlelogin}>
                 Login
               </IonButton>
+              <IonLoading isOpen={status.loading}/>
             </IonCardContent>
           </IonCard>
         </div>
