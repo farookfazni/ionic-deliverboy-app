@@ -25,6 +25,7 @@ import {
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
+//import { firestore } from '../firebase';
 
 const Profile: React.FC = () => {
   return (

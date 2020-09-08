@@ -29,7 +29,7 @@ const AppAuthPages: React.FC = () => {
       <Route exact path="/my/delivery">
         <Delivery />
       </Route>
-      <Route exact path="/my/deliveryentrypage">
+      <Route exact path="/my/deliveryentrypage/:id">
         <DeliveryEntryPge />
       </Route>
       <Route exact path="/my/holdpage">

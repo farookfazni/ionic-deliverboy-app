@@ -24,23 +24,43 @@ import {
   IonItemOption,
   IonActionSheet,
 } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
-import { 
-  location as locationIcon, 
+import {
+  location as locationIcon,
   call as callIcon,
   trash,
   pause as holdIcon,
   bicycle as deliveryIcon,
   returnUpBack as returnIcon,
   close as closeIcon,
- } from "ionicons/icons";
-import { } from "@fortawesome/react-fontawesome";
-import { } from "@fortawesome/free-solid-svg-icons";
+} from "ionicons/icons";
+import {} from "@fortawesome/react-fontawesome";
+import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
+import { Entry, toEntry } from "../model";
+import { useParams } from "react-router";
+import { useAuth } from "../auth";
+import { firestore } from "../firebase";
+
+interface RouteParams {
+  id: string;
+}
 
 const DeliveryEntryPge: React.FC = () => {
   const [showActionSheet, setShowActionSheet] = useState(false);
+  const { userId } = useAuth();
+  const { id } = useParams<RouteParams>();
+  const [entry, setEntry] = useState<Entry>();
+  useEffect(() => {
+    const entryRef = firestore
+      .collection('users')
+      .doc(userId)
+      .collection('Orders')
+      .doc(id);
+    entryRef.get().then((doc) => setEntry(toEntry(doc)));
+  }, [userId,id]);
+
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
@@ -59,10 +79,10 @@ const DeliveryEntryPge: React.FC = () => {
               <IonRow>
                 <IonCol size="10">
                   <IonCardTitle mode="md">
-                    <strong>Mr Nathan D.</strong>
+                    <strong>{entry?.Name}</strong>
                   </IonCardTitle>
                   <IonCardSubtitle mode="md">
-                    122B Backers St,United Kingdom
+                  {entry?.Address}
                   </IonCardSubtitle>
                 </IonCol>
                 <IonCol size="2">
@@ -80,7 +100,7 @@ const DeliveryEntryPge: React.FC = () => {
                     <IonItem button mode="ios" color="dark" detail={false}>
                       <IonIcon icon={callIcon} color="primary" size="small" />
                       <IonLabel color="primary">
-                        <strong>+94 779794020</strong>
+                        <strong>+{entry?.Contact_no}</strong>
                       </IonLabel>
                     </IonItem>
                     <IonItemOptions side="start">
@@ -100,7 +120,7 @@ const DeliveryEntryPge: React.FC = () => {
                 <IonLabel mode="ios">
                   <p style={{ fontSize: 10 }}>OrderID :</p>
                   <h2>
-                    <strong>MH01182245</strong>
+                    <strong>{entry?.Order_id}</strong>
                   </h2>
                 </IonLabel>
               </IonItem>
@@ -108,7 +128,7 @@ const DeliveryEntryPge: React.FC = () => {
                 <IonLabel mode="ios">
                   <p style={{ fontSize: 10 }}>Price :</p>
                   <h2>
-                    <strong>Rs 100.00</strong>
+                    <strong>Rs {entry?.Price}</strong>
                   </h2>
                 </IonLabel>
               </IonItem>
