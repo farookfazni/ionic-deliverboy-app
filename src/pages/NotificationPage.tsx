@@ -18,14 +18,26 @@ import {
   IonTitle,
   IonButton,
 } from "@ionic/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { location as locationIcon } from "ionicons/icons";
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
+import { firestore } from "../firebase";
+import { Entry, toEntry } from "../model";
+import { useAuth } from "../auth";
 
 const NotificationPage: React.FC = () => {
+  const { userId } = useAuth();
+  const [entries, setEntries] = useState<Entry[]>([]);
+  useEffect(() => {
+    const entriesRef = firestore
+      .collection("users")
+      .doc(userId)
+      .collection("Orders").where("Status", "==", "New Order");
+    return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
+  }, [userId]);
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
@@ -41,16 +53,16 @@ const NotificationPage: React.FC = () => {
         <IonList color="dark" mode="ios">
           <IonItem color="dark" mode="ios" ><strong>New Orders</strong></IonItem>
         </IonList>
-        <IonCard color="dark">
+        {entries.map((entry) => (<IonCard color="dark"  key={entry.id}>
           <IonCardHeader>
             <IonGrid>
               <IonRow>
                 <IonCol size="10">
                   <IonCardTitle mode="md">
-                    <strong>Mr Nathan D.</strong>
+                    <strong>{entry?.Name}</strong>
                   </IonCardTitle>
                   <IonCardSubtitle mode="md">
-                    122B Backers St,United Kingdom
+                  {entry?.Address}
                   </IonCardSubtitle>
                 </IonCol>
                 <IonCol size="2">
@@ -62,7 +74,7 @@ const NotificationPage: React.FC = () => {
               Get The Order
             </IonButton>
           </IonCardHeader>
-        </IonCard>
+        </IonCard>))}
       </IonContent>
     </IonPage>
   );
