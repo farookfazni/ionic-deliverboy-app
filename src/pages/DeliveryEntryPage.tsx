@@ -22,24 +22,20 @@ import {
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
-  IonActionSheet,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import {
   location as locationIcon,
   call as callIcon,
-  trash,
-  pause as holdIcon,
-  bicycle as deliveryIcon,
-  returnUpBack as returnIcon,
-  close as closeIcon,
 } from "ionicons/icons";
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
 import { Entry, toEntry } from "../model";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { useAuth } from "../auth";
 import { firestore } from "../firebase";
 
@@ -48,18 +44,34 @@ interface RouteParams {
 }
 
 const DeliveryEntryPge: React.FC = () => {
-  const [showActionSheet, setShowActionSheet] = useState(false);
   const { userId } = useAuth();
+  const history = useHistory();
+  const [Status, setStatus] = useState();
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
+
+  const handleStatus = async () => {
+    const StatusData = {
+      Status,
+    };
+     await firestore
+      .collection("users")
+      .doc(userId)
+      .collection("Orders")
+      .doc(id)
+      .update(StatusData);
+
+    history.goBack();
+  };
+
   useEffect(() => {
     const entryRef = firestore
-      .collection('users')
+      .collection("users")
       .doc(userId)
-      .collection('Orders')
+      .collection("Orders")
       .doc(id);
     entryRef.get().then((doc) => setEntry(toEntry(doc)));
-  }, [userId,id]);
+  }, [userId, id]);
 
   return (
     <IonPage className="dashboard-page">
@@ -81,9 +93,7 @@ const DeliveryEntryPge: React.FC = () => {
                   <IonCardTitle mode="md">
                     <strong>{entry?.Name}</strong>
                   </IonCardTitle>
-                  <IonCardSubtitle mode="md">
-                  {entry?.Address}
-                  </IonCardSubtitle>
+                  <IonCardSubtitle mode="md">{entry?.Address}</IonCardSubtitle>
                 </IonCol>
                 <IonCol size="2">
                   <IonButtons>
@@ -134,57 +144,26 @@ const DeliveryEntryPge: React.FC = () => {
               </IonItem>
             </IonList>
 
+            <IonItem color="deliveryboy">
+              <IonLabel>Set Status</IonLabel>
+              <IonSelect
+                interface="action-sheet"
+                placeholder="Select One"
+                onIonChange={(event) => setStatus(event.detail.value)}
+              >
+                <IonSelectOption value={Status}>Delivered</IonSelectOption>
+                <IonSelectOption value={Status}>Hold</IonSelectOption>
+                <IonSelectOption value={Status}>Return</IonSelectOption>
+              </IonSelect>
+            </IonItem>
             <IonButton
               fill="solid"
               expand="block"
               color="color1"
-              onClick={() => setShowActionSheet(true)}
+              onClick={handleStatus}
             >
-              Set Status
+              Submit
             </IonButton>
-            <IonActionSheet
-              isOpen={showActionSheet}
-              onDidDismiss={() => setShowActionSheet(false)}
-              buttons={[
-                {
-                  text: "Delete",
-                  role: "destructive",
-                  icon: trash,
-                  handler: () => {
-                    console.log("Delete clicked");
-                  },
-                },
-                {
-                  text: "Delivered",
-                  icon: deliveryIcon,
-                  handler: () => {
-                    console.log("Delivered clicked");
-                  },
-                },
-                {
-                  text: "Hold",
-                  icon: holdIcon,
-                  handler: () => {
-                    console.log("Hold clicked");
-                  },
-                },
-                {
-                  text: "Return",
-                  icon: returnIcon,
-                  handler: () => {
-                    console.log("Return clicked");
-                  },
-                },
-                {
-                  text: "Cancel",
-                  icon: closeIcon,
-                  role: "cancel",
-                  handler: () => {
-                    console.log("Cancel clicked");
-                  },
-                },
-              ]}
-            ></IonActionSheet>
           </IonCardContent>
         </IonCard>
       </IonContent>
