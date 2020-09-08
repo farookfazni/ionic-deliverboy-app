@@ -154,6 +154,7 @@ const DeliveryEntryPge: React.FC = () => {
                 <IonSelectOption value={Status}>Delivered</IonSelectOption>
                 <IonSelectOption value={Status}>Hold</IonSelectOption>
                 <IonSelectOption value={Status}>Return</IonSelectOption>
+                <IonSelectOption value={Status}>New Order</IonSelectOption>
               </IonSelect>
             </IonItem>
             <IonButton

@@ -30,12 +30,21 @@ import { Entry, toEntry } from "../model";
 const Delivery: React.FC = () => {
   const { userId } = useAuth();
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [queries, setqueries] = useState<Entry[]>([]);
   useEffect(() => {
     const entriesRef = firestore
       .collection("users")
       .doc(userId)
-      .collection("Orders");
+      .collection("Orders").where("Status", "==", "New Order");
     return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
+  }, [userId]);
+
+  useEffect(() => {
+    const queriesRef = firestore
+      .collection("users")
+      .doc(userId)
+      .collection("Orders").where("Status", "==", "Delivered");
+    return queriesRef.onSnapshot(({ docs }) => setqueries(docs.map(toEntry)));
   }, [userId]);
   return (
     <IonPage className="dashboard-page">
@@ -75,16 +84,16 @@ const Delivery: React.FC = () => {
         <IonList color="dark" mode="ios">
           <IonItem color="dark" mode="ios" ><strong>Delivered</strong></IonItem>
         </IonList>
-        <IonCard color="dark" button>
+        {queries.map((entry) => (<IonCard color="dark" button  key={entry.id} routerLink={`./deliveryentrypage/${entry.id}`}>
           <IonCardHeader>
             <IonGrid>
               <IonRow>
                 <IonCol size="10">
                   <IonCardTitle mode="md">
-                    <strong>Miss Arya Stark.</strong>
+                    <strong>{entry?.Name}</strong>
                   </IonCardTitle>
                   <IonCardSubtitle mode="md">
-                    122B Winterfell,Westros
+                  {entry?.Address}
                   </IonCardSubtitle>
                 </IonCol>
                 <IonCol size="2">
@@ -93,7 +102,7 @@ const Delivery: React.FC = () => {
               </IonRow>
             </IonGrid>
           </IonCardHeader>
-        </IonCard>
+        </IonCard>))}
       </IonContent>
     </IonPage>
   );
