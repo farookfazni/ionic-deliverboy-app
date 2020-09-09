@@ -13,7 +13,7 @@ import {
   IonIcon,
   IonButton,
 } from "@ionic/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { 
   person as nameIcon,
@@ -25,9 +25,25 @@ import {
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
-//import { firestore } from '../firebase';
+import { firestore } from "../firebase";
+import { useAuth } from "../auth";
+
 
 const Profile: React.FC = () => {
+  const { userId } = useAuth();
+  const [entries, setEntries] = useState([]);
+  useEffect(() => {
+    const entriesRef = firestore
+      .collection("users").doc(userId).collection("Details");
+      entriesRef.get().then((snapshot) => {
+        const entries = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setEntries(entries);
+      });
+  }, [userId]);
+
   return (
     <IonPage className="profile-page">
       <IonHeader>
@@ -50,36 +66,37 @@ const Profile: React.FC = () => {
 
         <div className="dashboard">
           <div className="profile-list">
-            <IonList mode="ios" lines="inset">
-              <IonItem color="dark" mode="ios">
+          {entries.map((entry) => (<IonList mode="ios" lines="inset" key={entry.id}>
+              <IonItem color="dark" mode="ios"  >
                 <IonLabel mode="ios">
                   <p style={{fontSize:10}}>Full Name</p>
-                  <h2><strong>Fazni Farook</strong></h2>
+                  <h2><strong>{entry.full_name}</strong></h2>
                   </IonLabel>
                   <IonIcon slot="end" icon={nameIcon} color="deliverboy"/>
               </IonItem>
               <IonItem color="dark" mode="ios">
                 <IonLabel mode="ios">
                   <p style={{fontSize:10}}>Mobile Number</p>
-                  <h2><strong>+94 757502298</strong></h2>
+                  <h2><strong>+94 {entry.mobile_num}</strong></h2>
                   </IonLabel>
                   <IonIcon slot="end" icon={callIcon} color="deliverboy"/>
               </IonItem>
               <IonItem color="dark" mode="ios">
                 <IonLabel mode="ios">
                   <p style={{fontSize:10}}>Blood Group</p>
-                  <h2><strong>A+</strong></h2>
+                  <h2><strong>{entry.blood_group}</strong></h2>
                   </IonLabel>
                   <IonIcon slot="end" icon={bloodIcon} color="deliverboy"/>
               </IonItem>
               <IonItem color="dark" mode="ios">
                 <IonLabel mode="ios">
                   <p style={{fontSize:10}}>Email</p>
-                  <h2><strong>faznifarook@gmail.com</strong></h2>
+                  <h2><strong>{entry.email}</strong></h2>
                   </IonLabel>
                   <IonIcon slot="end" icon={mailIcon} color="deliverboy"/>
               </IonItem>
             </IonList>
+            ))}
           </div>
         </div>
       </IonContent>
