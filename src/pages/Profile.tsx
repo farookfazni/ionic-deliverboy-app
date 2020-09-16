@@ -1,7 +1,6 @@
 import {
   IonContent,
   IonPage,
-  IonImg,
   IonAvatar,
   IonHeader,
   IonToolbar,
@@ -12,9 +11,10 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
-  IonInput,
+  IonInput, 
+  IonLoading
 } from "@ionic/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import {
   person as nameIcon,
@@ -26,9 +26,19 @@ import {
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
-import { firestore } from "../firebase";
+import { firestore, storage } from "../firebase";
 import { useAuth } from "../auth";
 import { useHistory, useParams } from "react-router";
+
+async function savePicture(blobUrl) {
+  const pictureRef = storage.ref(`/profilepic/pictures/${Date.now()}`);
+  const responce = await fetch(blobUrl);
+  const blob = await responce.blob();
+  const snapshot = await pictureRef.put(blob);
+  const url = await snapshot.ref.getDownloadURL();
+  console.log("saved Picture:", url);
+  return url;
+}
 
 interface RouteParams {
   id: string;
@@ -45,12 +55,30 @@ const Profile: React.FC = () => {
   const { id } = useParams<RouteParams>();
   const [editnme, setEditnme] = useState<any>(false);
   const [labelnme, setlabelnme] = useState<any>(true);
+
+  const [editImg, setEditImg] = useState<any>(false);
+  const [labelImg, setlabelImg] = useState<any>(true);
+  const [loading, setloading] = useState(false);
+
   const [editnumb, setEditnumb] = useState<any>(false);
   const [labelnumb, setlabelnumb] = useState<any>(true);
   const [edit3, setEdit3] = useState<any>(false);
   const [label3, setlabel3] = useState<any>(true);
   const [edit4, setEdit4] = useState<any>(false);
   const [label4, setlabel4] = useState<any>(true);
+  const fileInputRef = useRef<HTMLInputElement>();
+  const [PictureUrl, setPictureUrl] = useState("/assets/placeholder.png");
+
+  const handlefilechange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files.item(0);
+      const PictureUrl = URL.createObjectURL(file);
+      setPictureUrl(PictureUrl);
+      setEditImg(true);
+      setlabelImg(false);
+    }
+  };
+
 
   const editname = () => {
     setEditnme(true);
@@ -67,6 +95,25 @@ const Profile: React.FC = () => {
   const editemail = () => {
     setEdit4(true);
     setlabel4(false);
+  };
+
+  const editimage = async () => {
+    const pictRef = firestore
+      .collection("users")
+      .doc(userId)
+      .collection("Details")
+      .doc(id);
+    const picData = {
+      PictureUrl,
+    };
+    setloading(true);
+    if (PictureUrl.startsWith("blob:")) {
+      picData.PictureUrl = await savePicture(PictureUrl);
+    }
+    const addpic = await pictRef.update(picData);
+    console.log("added: ", addpic);
+    setloading(false);
+    history.go(0);
   };
 
   const savename = async () => {
@@ -158,6 +205,14 @@ const Profile: React.FC = () => {
       setEntries(entries);
     });
   }, [userId]);
+  useEffect(
+    () => () => {
+      if (PictureUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(PictureUrl);
+      }
+    },
+    [PictureUrl]
+  );
 
   return (
     <IonPage className="profile-page">
@@ -170,11 +225,52 @@ const Profile: React.FC = () => {
       </IonHeader>
 
       <IonContent id="dashboard-content">
-        <div className="profile-img">
-          <IonAvatar>
-            <IonImg src="/assets/Me.jpg" />
-          </IonAvatar>
-        </div>
+        {labelImg && (
+          <div className="profile-img">
+            {entries.map((entry) => (
+              <IonAvatar key={entry.id}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  ref={fileInputRef}
+                  onChange={handlefilechange}
+                />
+                <img
+                  src={entry.PictureUrl}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={() => fileInputRef.current.click()}
+                />
+              </IonAvatar>
+            ))}
+            
+          </div>
+        )}
+
+        {editImg && (
+          <div className="profile-img">
+            <IonAvatar>
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                ref={fileInputRef}
+                onChange={handlefilechange}
+              />
+              <img
+                src={PictureUrl}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={() => fileInputRef.current.click()}
+              />
+            </IonAvatar>
+            <IonButton fill="clear" mode="ios" onClick={editimage}>
+              save
+            </IonButton>
+            <IonLoading isOpen={loading}/>
+          </div>
+        )}
 
         <div className="dashboard">
           <div className="profile-list">
@@ -188,7 +284,6 @@ const Profile: React.FC = () => {
                         <strong>{entry.full_name}</strong>
                         <IonButton fill="clear" mode="ios" onClick={editname}>
                           <IonIcon
-                            
                             slot="icon-only"
                             icon={editIcon}
                             size="small"
@@ -242,22 +337,22 @@ const Profile: React.FC = () => {
                 )}
 
                 {label3 && (
-                <IonItem color="dark" mode="ios">
-                  <IonLabel mode="ios">
-                    <p style={{ fontSize: 10 }}>Blood Group</p>
-                    <h2>
-                      <strong>{entry.blood_group}</strong>
-                      <IonButton fill="clear" mode="ios" onClick={editblood}>
+                  <IonItem color="dark" mode="ios">
+                    <IonLabel mode="ios">
+                      <p style={{ fontSize: 10 }}>Blood Group</p>
+                      <h2>
+                        <strong>{entry.blood_group}</strong>
+                        <IonButton fill="clear" mode="ios" onClick={editblood}>
                           <IonIcon
                             slot="icon-only"
                             icon={editIcon}
                             size="small"
                           />
                         </IonButton>
-                    </h2>
-                  </IonLabel>
-                  <IonIcon slot="end" icon={bloodIcon} color="deliverboy" />
-                </IonItem>
+                      </h2>
+                    </IonLabel>
+                    <IonIcon slot="end" icon={bloodIcon} color="deliverboy" />
+                  </IonItem>
                 )}
                 {edit3 && (
                   <IonItem color="dark" mode="ios">
@@ -272,22 +367,22 @@ const Profile: React.FC = () => {
                 )}
 
                 {label4 && (
-                <IonItem color="dark" mode="ios">
-                  <IonLabel mode="ios">
-                    <p style={{ fontSize: 10 }}>Email</p>
-                    <h2>
-                      <strong>{entry.email}</strong>
-                      <IonButton fill="clear" mode="ios" onClick={editemail}>
+                  <IonItem color="dark" mode="ios">
+                    <IonLabel mode="ios">
+                      <p style={{ fontSize: 10 }}>Email</p>
+                      <h2>
+                        <strong>{entry.email}</strong>
+                        <IonButton fill="clear" mode="ios" onClick={editemail}>
                           <IonIcon
                             slot="icon-only"
                             icon={editIcon}
                             size="small"
                           />
                         </IonButton>
-                    </h2>
-                  </IonLabel>
-                  <IonIcon slot="end" icon={mailIcon} color="deliverboy" />
-                </IonItem>
+                      </h2>
+                    </IonLabel>
+                    <IonIcon slot="end" icon={mailIcon} color="deliverboy" />
+                  </IonItem>
                 )}
                 {edit4 && (
                   <IonItem color="dark" mode="ios">
@@ -300,8 +395,6 @@ const Profile: React.FC = () => {
                     </IonButton>
                   </IonItem>
                 )}
-                
-                
               </IonList>
             ))}
           </div>
