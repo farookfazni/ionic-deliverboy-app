@@ -24,13 +24,11 @@ import {
   IonItemOption,
   IonSelect,
   IonSelectOption,
+  IonText,
 } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import {
-  location as locationIcon,
-  call as callIcon,
-} from "ionicons/icons";
+import { location as locationIcon, call as callIcon } from "ionicons/icons";
 import {} from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
@@ -47,22 +45,27 @@ const DeliveryEntryPge: React.FC = () => {
   const { userId } = useAuth();
   const history = useHistory();
   const [Status, setStatus] = useState();
+  const [error, setError] = useState(false);
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
-  
 
   const handleStatus = async () => {
-    const StatusData = {
-      Status,
-    };
-     await firestore
-      .collection("users")
-      .doc(userId)
-      .collection("Orders")
-      .doc(id)
-      .update(StatusData);
-
-    history.goBack();
+    try {
+      const StatusData = {
+        Status,
+      };
+      await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("Orders")
+        .doc(id)
+        .update(StatusData);
+      setError(false);
+      history.goBack();
+    } catch (err) {
+      setError(true);
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -143,7 +146,6 @@ const DeliveryEntryPge: React.FC = () => {
                   </h2>
                 </IonLabel>
               </IonItem>
-              
             </IonList>
             <IonItem color="deliveryboy">
               <IonLabel>Set Status</IonLabel>
@@ -158,6 +160,7 @@ const DeliveryEntryPge: React.FC = () => {
                 <IonSelectOption value={Status}>New Order</IonSelectOption>
               </IonSelect>
             </IonItem>
+            {error && <IonText color="danger">Select Status</IonText>}
             <IonButton
               fill="solid"
               expand="block"

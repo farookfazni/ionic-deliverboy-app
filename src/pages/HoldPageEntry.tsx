@@ -24,6 +24,7 @@ import {
   IonCardContent,
   IonSelectOption,
   IonSelect,
+  IonText
 } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import "./Home.css";
@@ -45,10 +46,12 @@ const HoldPageEntry: React.FC = () => {
   const history = useHistory();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [Status, setStatus] = useState();
+  const [ error, setError] = useState(false);
   const { id } = useParams<RouteParams>();
 
   const handleStatus = async () => {
-    const StatusData = {
+    try{
+      const StatusData = {
       Status,
     };
     await firestore
@@ -57,8 +60,14 @@ const HoldPageEntry: React.FC = () => {
       .collection("Orders")
       .doc(id)
       .update(StatusData);
-
+      setError(false);
     history.goBack();
+
+    }
+    catch(err){
+      setError(true);
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -165,7 +174,7 @@ const HoldPageEntry: React.FC = () => {
                 </IonSelect>
               </IonItem>
 
-              
+              {error && <IonText color="danger">Select Status</IonText>}
                 <IonButton
                   
                   fill="solid"
@@ -176,7 +185,7 @@ const HoldPageEntry: React.FC = () => {
                   Update Reason
                 </IonButton>
               
-
+                
               <IonButton
                 fill="solid"
                 expand="block"
