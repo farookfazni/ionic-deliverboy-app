@@ -6,6 +6,7 @@ export interface Entry {
     Price:BigInteger;
     Contact_no : BigInteger;
     Location: string;
+    Reason: string;
     Status: string;
 }
 

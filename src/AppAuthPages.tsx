@@ -10,6 +10,7 @@ import HoldEntryPge from "./pages/HoldEntryPage";
 import NotificationPage from "./pages/NotificationPage";
 import ChatPage from "./pages/ChatPage";
 import { useAuth } from "./auth";
+import HoldPageEntry from "./pages/HoldPageEntry";
 
 
 
@@ -32,6 +33,9 @@ const AppAuthPages: React.FC = () => {
       <Route exact path="/my/deliveryentrypage/:id">
         <DeliveryEntryPge />
       </Route>
+      <Route exact path="/my/holdpageentry/:id">
+        <HoldPageEntry />
+      </Route>
       <Route exact path="/my/holdpage">
         <HoldPage />
       </Route>
@@ -41,7 +45,7 @@ const AppAuthPages: React.FC = () => {
       <Route exact path="/my/notificationpage">
         <NotificationPage />
       </Route>
-      <Route exact path="/my/holdentrypage">
+      <Route exact path="/my/holdentrypage/:id">
         <HoldEntryPge />
       </Route>
       <Route exact path="/" render={() => <Redirect to="/my/home" />} />

@@ -49,6 +49,7 @@ const DeliveryEntryPge: React.FC = () => {
   const [Status, setStatus] = useState();
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
+  
 
   const handleStatus = async () => {
     const StatusData = {
@@ -142,8 +143,8 @@ const DeliveryEntryPge: React.FC = () => {
                   </h2>
                 </IonLabel>
               </IonItem>
+              
             </IonList>
-
             <IonItem color="deliveryboy">
               <IonLabel>Set Status</IonLabel>
               <IonSelect
