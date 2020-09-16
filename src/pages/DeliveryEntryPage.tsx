@@ -64,7 +64,7 @@ const DeliveryEntryPge: React.FC = () => {
       history.goBack();
     } catch (err) {
       setError(true);
-      console.log(err);
+      
     }
   };
 

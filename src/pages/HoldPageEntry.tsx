@@ -66,7 +66,7 @@ const HoldPageEntry: React.FC = () => {
     }
     catch(err){
       setError(true);
-      console.log(err);
+      
     }
   };
 

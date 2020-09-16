@@ -19,7 +19,7 @@ import {
   IonFabButton,
   IonBadge,
 } from "@ionic/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import {
   notifications as notificationIcon,
@@ -32,9 +32,26 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import "../theme/custom.css";
-import {auth} from '../firebase';
+import {auth, firestore} from '../firebase';
+import { useAuth } from "../auth";
 
 const Home: React.FC = () => {
+  const { userId } = useAuth();
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const entriesRef = firestore
+      .collection("users")
+      .doc(userId)
+      .collection("Details");
+    entriesRef.get().then((snapshot) => {
+      const entries = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setEntries(entries);
+    });
+  }, [userId]);
 
   return (
     <IonPage className="dashboard-page">
@@ -50,9 +67,9 @@ const Home: React.FC = () => {
                 <IonIcon slot="icon-only" icon={notificationIcon} />
                 <IonBadge id="notification-badge" color="danger">1</IonBadge>
               </IonButton>
-              <IonButton fill="clear" size="small"  routerLink="./profile">
+              {entries.map((entry) => (<IonButton key={entry.id} fill="clear" size="small"  routerLink={`/my/profile/${entry.id}`}>
                 <IonIcon slot="icon-only" icon={profileIcon} />
-              </IonButton>
+              </IonButton>))}
             </IonButtons>
             
           </IonItem>

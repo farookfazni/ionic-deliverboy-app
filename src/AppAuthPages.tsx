@@ -24,7 +24,7 @@ const AppAuthPages: React.FC = () => {
       <Route exact path="/my/home">
         <Home />
       </Route>
-      <Route exact path="/my/profile">
+      <Route exact path="/my/profile/:id">
         <Profile />
       </Route>
       <Route exact path="/my/delivery">
