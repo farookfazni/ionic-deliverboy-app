@@ -111,7 +111,7 @@ const Home: React.FC = () => {
               </IonCard>
             </IonCol>
             <IonCol size="6">
-              <IonCard button mode="md" color="danger">
+              <IonCard button mode="md" color="danger" routerLink="./returnpage">
                 <IonCardHeader>
                   <IonCardTitle className="card-font">
                     <FontAwesomeIcon icon={faRetweet} /> Return

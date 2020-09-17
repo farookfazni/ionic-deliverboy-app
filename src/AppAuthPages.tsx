@@ -11,6 +11,8 @@ import NotificationPage from "./pages/NotificationPage";
 import ChatPage from "./pages/ChatPage";
 import { useAuth } from "./auth";
 import HoldPageEntry from "./pages/HoldPageEntry";
+import ReturnPage from "./pages/ReturnPage";
+import ReturnPageEntry from "./pages/ReturnPageEntry";
 
 
 
@@ -36,8 +38,14 @@ const AppAuthPages: React.FC = () => {
       <Route exact path="/my/holdpageentry/:id">
         <HoldPageEntry />
       </Route>
+      <Route exact path="/my/returnpageentry/:id">
+        <ReturnPageEntry />
+      </Route>
       <Route exact path="/my/holdpage">
         <HoldPage />
+      </Route>
+      <Route exact path="/my/returnpage">
+        <ReturnPage />
       </Route>
       <Route exact path="/my/chatpage">
         <ChatPage />

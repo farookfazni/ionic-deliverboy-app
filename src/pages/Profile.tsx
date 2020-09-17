@@ -1,7 +1,6 @@
 import {
   IonContent,
   IonPage,
-  IonAvatar,
   IonHeader,
   IonToolbar,
   IonButtons,
@@ -11,8 +10,8 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
-  IonInput, 
-  IonLoading
+  IonInput,
+  IonLoading,
 } from "@ionic/react";
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
@@ -78,7 +77,6 @@ const Profile: React.FC = () => {
       setlabelImg(false);
     }
   };
-
 
   const editname = () => {
     setEditnme(true);
@@ -228,29 +226,28 @@ const Profile: React.FC = () => {
         {labelImg && (
           <div className="profile-img">
             {entries.map((entry) => (
-              <IonAvatar key={entry.id}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  ref={fileInputRef}
-                  onChange={handlefilechange}
-                />
-                <img
-                  src={entry.PictureUrl}
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                  onClick={() => fileInputRef.current.click()}
-                />
-              </IonAvatar>
+              <img
+                key={entry.id}
+                className="avatr-img"
+                src={entry.PictureUrl}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={() => fileInputRef.current.click()}
+              />
             ))}
-            
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              ref={fileInputRef}
+              onChange={handlefilechange}
+            />
           </div>
         )}
 
         {editImg && (
           <div className="profile-img">
-            <IonAvatar>
+            
               <input
                 type="file"
                 accept="image/*"
@@ -258,17 +255,17 @@ const Profile: React.FC = () => {
                 ref={fileInputRef}
                 onChange={handlefilechange}
               />
-              <img
+              <img className="avatr-img"
                 src={PictureUrl}
                 alt=""
                 style={{ cursor: "pointer" }}
                 onClick={() => fileInputRef.current.click()}
               />
-            </IonAvatar>
-            <IonButton fill="clear" mode="ios" onClick={editimage}>
+            
+            <IonButton fill="clear" mode="ios" onClick={editimage} color="dark">
               save
             </IonButton>
-            <IonLoading isOpen={loading}/>
+            <IonLoading isOpen={loading} />
           </div>
         )}
 
