@@ -52,12 +52,12 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-danger-tint: #ed576b;
 
   /** dark **/
-  --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34, 36, 40;
-  --ion-color-dark-contrast: #ffffff;
-  --ion-color-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-dark-shade: #1e2023;
-  --ion-color-dark-tint: #383a3e;
+  --ion-color-dark: #f4f5f8;
+    --ion-color-dark-rgb: 244,245,248;
+    --ion-color-dark-contrast: #000000;
+    --ion-color-dark-contrast-rgb: 0,0,0;
+    --ion-color-dark-shade: #d7d8da;
+    --ion-color-dark-tint: #f5f6f9;
 
   /** medium **/
   --ion-color-medium: #92949c;
@@ -75,12 +75,12 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-color-deliverboy: #09ce59;
-  --ion-color-deliverboy-rgb: 9,206,89;
-  --ion-color-deliverboy-contrast: #000000;
-  --ion-color-deliverboy-contrast-rgb: 0,0,0;
-  --ion-color-deliverboy-shade: #08b54e;
-  --ion-color-deliverboy-tint: #22d36a;
+  --ion-color-deliverboy: rgb(40, 102, 169);
+  --ion-color-deliverboy-rgb: 40,103,169;
+  --ion-color-deliverboy-contrast: #ffffff;
+  --ion-color-deliverboy-contrast-rgb: 255,255,255;
+  --ion-color-deliverboy-shade: #235b95;
+  --ion-color-deliverboy-tint: #3e76b2;
 
   --ion-color-textarea: #d2d2d6;
   --ion-color-textarea-rgb: 210,210,214;

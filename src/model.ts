@@ -1,3 +1,5 @@
+
+
 export interface Entry {
     id: string;
     Address: string;
@@ -5,7 +7,9 @@ export interface Entry {
     Order_id: string;
     Price:BigInteger;
     Contact_no : BigInteger;
-    Location: string;
+    Location: {Latitude:ConstrainDouble,Longitude:ConstrainDouble};
+    Latitude:ConstrainDouble;
+    Longitude:ConstrainDouble;
     Reason: string;
     Status: string;
 }

@@ -13,6 +13,7 @@ import { useAuth } from "./auth";
 import HoldPageEntry from "./pages/HoldPageEntry";
 import ReturnPage from "./pages/ReturnPage";
 import ReturnPageEntry from "./pages/ReturnPageEntry";
+import LocationPage from "./pages/LocationPage";
 
 
 
@@ -31,6 +32,9 @@ const AppAuthPages: React.FC = () => {
       </Route>
       <Route exact path="/my/delivery">
         <Delivery />
+      </Route>
+      <Route exact path="/my/location/:id">
+        <LocationPage />
       </Route>
       <Route exact path="/my/deliveryentrypage/:id">
         <DeliveryEntryPge />

@@ -222,7 +222,7 @@ const Profile: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent id="dashboard-content">
+      <IonContent>
         {labelImg && (
           <div className="profile-img">
             {entries.map((entry) => (
