@@ -17,11 +17,18 @@ import { useAuth } from "../auth";
 import { useParams } from "react-router";
 import { firestore } from "../firebase";
 import { Entry, toEntry } from "../model";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import { IonButton, IonLoading } from "@ionic/react";
+import { Geolocation, Geoposition } from "@ionic-native/geolocation";
+
 
 const containerStyle = {
   width: "400px",
-  height: "400px",
+  height: "900px",
 };
 
 interface RouteParams {
@@ -32,6 +39,23 @@ const LocationPage: React.FC = () => {
   const { userId } = useAuth();
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
+  const [loading, setloading] = useState<boolean>(false);
+  const [position, setposition] = useState<Geoposition>();
+  const [button, setbutton] = useState(true);
+
+  
+
+  const getloaction = async () => {
+    setloading(true);
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      setposition(position);
+      setloading(false);
+      setbutton(false);
+    } catch (e) {
+      setloading(false);
+    }
+  };
 
   useEffect(() => {
     const entryRef = firestore
@@ -42,10 +66,6 @@ const LocationPage: React.FC = () => {
     entryRef.get().then((doc) => setEntry(toEntry(doc)));
   }, [userId, id]);
 
-  useLoadScript({
-    googleMapsApiKey: "AIzaSyDTbIMNNDPyFjHjuUBpTGv3UJcHR_rNaXI",
-  });
-  
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
@@ -58,19 +78,48 @@ const LocationPage: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        <div style={{ width: "100vw", height: "100vh" }}>
+        <div className="GeoMap">
           <GoogleMap
             mapContainerStyle={containerStyle}
-            zoom={10}
-            center={{ lat: entry?.Latitude, lng: entry?.Longitude }}
+            zoom={16}
+            center={{ lat: parseFloat(entry?.Latitude), lng: parseFloat(entry?.Longitude) }}
             options={{ zoomControl: true }}
             onClick={(event) => {
               console.log(event);
             }}
           >
-            <Marker position={{ lat: entry?.Latitude, lng: entry?.Longitude }} />
+            <Marker
+              position={{ lat:  parseFloat(entry?.Latitude), lng: parseFloat(entry?.Longitude) }}
+            />
+            {position && (
+              <Marker
+                position={{
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                }}
+              />
+            )}
+
+            <DirectionsRenderer />
           </GoogleMap>
         </div>
+        {button && (
+          <div className="geoFooter">
+            <IonLoading
+              isOpen={loading}
+              message={"Getting Direction"}
+              onDidDismiss={() => setloading(false)}
+            />
+            <IonButton
+              expand="block"
+              fill="solid"
+              color="primary"
+              onClick={getloaction}
+            >
+              Get Direction
+            </IonButton>
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );

@@ -60,7 +60,6 @@
 }
 #notification-btn {
   position: relative;
-  
 }
 
 #notification-badge {
@@ -68,13 +67,26 @@
   top: -10px;
   right: 10px;
 }
-.profile-edit-icon{
+.profile-edit-icon {
   size: 10px;
   top: 0px;
   right: 50px;
 }
-.avatr-img{
+.avatr-img {
   border-radius: 1000px;
   height: 100px;
 }
 
+.GeoMap {
+  width: 100%;
+  height: 100%;
+}
+
+.geoFooter {
+  position: absolute;
+  bottom: 0;
+  /* margin: auto; */
+  left: 0;
+  right: 0;
+  margin: 16px;
+}

@@ -106,7 +106,7 @@ const HoldPageEntry: React.FC = () => {
                   </IonCol>
                   <IonCol size="2">
                     <IonButtons>
-                      <IonButton fill="clear" size="small" mode="ios">
+                      <IonButton fill="clear" size="small" mode="ios" routerLink={`/my/location/${entry?.id}`}>
                         <IonIcon icon={locationIcon} size="large" />
                       </IonButton>
                     </IonButtons>

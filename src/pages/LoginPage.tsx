@@ -26,20 +26,30 @@ import { useAuth } from "../auth";
 import { auth } from "../firebase";
 
 
+interface Error {
+  loading: boolean;
+  error: boolean;
+  message?: string;
+}
 
 const LoginPage: React.FC = () => {
   const { loggedIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [ status, setStatus] = useState({loading:false, error:false});
+  const [status, setStatus] = useState<Error>({
+    loading: false,
+    error: false,
+    message: undefined,
+  });
 
   const handlelogin = async () => {
     try {
-      setStatus({loading:true, error:false});
+      setStatus({ loading: true, error: false, message: undefined });
       const credintial = await auth.signInWithEmailAndPassword(email, password);
       console.log("credential:", credintial);
     } catch (err) {
-      setStatus({loading:false, error:true});
+      const message = err.message.length > 0 ? err.message : "Invalid Crendial";
+      setStatus({ loading: false, error: true, message });
       console.log("error : ", err);
     }
   };
@@ -76,11 +86,13 @@ const LoginPage: React.FC = () => {
                   onIonChange={(event) => setPassword(event.detail.value)}
                 />
               </IonItem>
-              {status.error && <IonText color="danger">Invalid credential</IonText>}
+              {status.error && (
+                <IonText color="danger">{status.message}</IonText>
+              )}
               <IonButton expand="block" onClick={handlelogin}>
                 Login
               </IonButton>
-              <IonLoading isOpen={status.loading}/>
+              <IonLoading isOpen={status.loading} />
             </IonCardContent>
           </IonCard>
         </div>

@@ -1,4 +1,8 @@
 
+interface Geopoint {
+    Latitude : number;
+    Longitude: number;
+}
 
 export interface Entry {
     id: string;
@@ -7,9 +11,10 @@ export interface Entry {
     Order_id: string;
     Price:BigInteger;
     Contact_no : BigInteger;
-    Location: {Latitude:ConstrainDouble,Longitude:ConstrainDouble};
-    Latitude:ConstrainDouble;
-    Longitude:ConstrainDouble;
+    Location: {Latitude : string;
+        Longitude: string;};
+    Latitude:string;
+    Longitude:string;
     Reason: string;
     Status: string;
 }
