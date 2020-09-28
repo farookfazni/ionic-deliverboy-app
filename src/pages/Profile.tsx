@@ -189,6 +189,9 @@ const Profile: React.FC = () => {
       console.log(err);
     }
   };
+  const cancel = async () => {
+    history.go(0);
+  }
 
   useEffect(() => {
     const entriesRef = firestore
@@ -297,6 +300,9 @@ const Profile: React.FC = () => {
                       value={full_name}
                       onIonChange={(event) => setName(event.detail.value)}
                     />
+                    <IonButton fill="clear" mode="ios" onClick={cancel}>
+                      cancel
+                    </IonButton>
                     <IonButton fill="clear" mode="ios" onClick={savename}>
                       Save
                     </IonButton>
@@ -327,6 +333,9 @@ const Profile: React.FC = () => {
                       value={mobile_num}
                       onIonChange={(event) => setNumber(event.detail.value)}
                     />
+                    <IonButton fill="clear" mode="ios" onClick={cancel}>
+                      cancel
+                    </IonButton>
                     <IonButton fill="clear" mode="ios" onClick={savenum}>
                       Save
                     </IonButton>
@@ -357,6 +366,9 @@ const Profile: React.FC = () => {
                       value={blood_group}
                       onIonChange={(event) => setBloodgroup(event.detail.value)}
                     />
+                    <IonButton fill="clear" mode="ios" onClick={cancel}>
+                      cancel
+                    </IonButton>
                     <IonButton fill="clear" mode="ios" onClick={saveblood}>
                       Save
                     </IonButton>
@@ -387,6 +399,9 @@ const Profile: React.FC = () => {
                       value={email}
                       onIonChange={(event) => setemail(event.detail.value)}
                     />
+                    <IonButton fill="clear" mode="ios" onClick={cancel}>
+                      cancel
+                    </IonButton>
                     <IonButton fill="clear" mode="ios" onClick={saveemail}>
                       Save
                     </IonButton>

@@ -164,13 +164,14 @@ const HoldPageEntry: React.FC = () => {
                 <IonLabel>Set Status</IonLabel>
                 <IonSelect
                   interface="action-sheet"
+                  value={Status}
                   placeholder="Select One"
                   onIonChange={(event) => setStatus(event.detail.value)}
                 >
-                  <IonSelectOption value={Status}>Delivered</IonSelectOption>
-                  <IonSelectOption value={Status}>Hold</IonSelectOption>
-                  <IonSelectOption value={Status}>Return</IonSelectOption>
-                  <IonSelectOption value={Status}>New Order</IonSelectOption>
+                  <IonSelectOption value="Delivered">Delivered</IonSelectOption>
+                  <IonSelectOption value="Hold">Hold</IonSelectOption>
+                  <IonSelectOption value="Return">Return</IonSelectOption>
+                  <IonSelectOption value="New Order">New Order</IonSelectOption>
                 </IonSelect>
               </IonItem>
 
