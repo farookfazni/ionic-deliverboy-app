@@ -70,7 +70,7 @@ const NotificationPage: React.FC = () => {
                 </IonCol>
               </IonRow>
             </IonGrid>
-            <IonButton expand="block">
+            <IonButton expand="block" routerLink={`./deliveryentrypage/${entry.id}`}>
               Get The Order
             </IonButton>
           </IonCardHeader>

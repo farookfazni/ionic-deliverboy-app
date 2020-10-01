@@ -28,6 +28,7 @@ import "../theme/custom.css";
 import { firestore, storage } from "../firebase";
 import { useAuth } from "../auth";
 import { useHistory, useParams } from "react-router";
+import {PopoverComponent} from './PopoverComponent';
 
 async function savePicture(blobUrl) {
   const pictureRef = storage.ref(`/profilepic/pictures/${Date.now()}`);
@@ -407,6 +408,7 @@ const Profile: React.FC = () => {
                     </IonButton>
                   </IonItem>
                 )}
+                <PopoverComponent/>
               </IonList>
             ))}
           </div>
