@@ -48,11 +48,13 @@ const DeliveryEntryPge: React.FC = () => {
   const [error, setError] = useState(false);
   const { id } = useParams<RouteParams>();
   const [entry, setEntry] = useState<Entry>();
+  const today = new Date();
 
   const handleStatus = async () => {
     try {
       const StatusData = {
         Status,
+        Dateadded:today,
       };
       await firestore
         .collection("users")

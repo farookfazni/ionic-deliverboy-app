@@ -55,6 +55,7 @@ const Home: React.FC = () => {
   const [Holdsize, setHoldsize] = useState<any>();
   const [Returnsize, setReturnsize] = useState<any>();
   const [Newsize, setNewsize] = useState<any>();
+  const [payment, setpayment] = useState<any[]>([]);
 
   useEffect(() => {
     const entriesRef = firestore
@@ -118,6 +119,19 @@ const Home: React.FC = () => {
     });
   }, [userId]);
 
+  useEffect(()=>{
+    const payment = firestore.collection("users").doc(userId)
+    .collection("Orders")
+    .where("Status", "==", "Delivered").orderBy('Dateadded','desc').limit(1);
+    payment.get().then((snapshot) => {
+      const payment = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setpayment(payment);
+    });
+  }, [userId])
+
   const handlerefresh = async () => {
     history.go(0);
   };
@@ -125,6 +139,7 @@ const Home: React.FC = () => {
   const buttonclicked = async (e) => {
     setShowPopover({ open: false, event: e.nativeEvent });
   };
+
 
   return (
     <IonPage className="dashboard-page">
@@ -202,13 +217,13 @@ const Home: React.FC = () => {
               </IonCard>
             </IonCol>
             <IonCol size="6">
-              <IonCard button mode="md" color="success">
+              <IonCard button mode="md" color="success" routerLink="/my/paymentpage">
                 <IonCardHeader>
                   <IonCardTitle className="card-font">
                     <IonIcon icon={paymentIcon} /> Payment
                   </IonCardTitle>
                 </IonCardHeader>
-                <IonCardContent></IonCardContent>
+              {payment.map((entry) => (<IonCardContent key={entry.id}>Rs. {entry.Price}</IonCardContent>))}
               </IonCard>
             </IonCol>
           </IonRow>

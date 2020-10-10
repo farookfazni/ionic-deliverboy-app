@@ -48,11 +48,13 @@ const ReturnPageEntry: React.FC = () => {
   const [Status, setStatus] = useState();
   const [ error, setError] = useState(false);
   const { id } = useParams<RouteParams>();
+  const today = new Date();
 
   const handleStatus = async () => {
     try{
       const StatusData = {
       Status,
+      Dateadded:today,
     };
     await firestore
       .collection("users")

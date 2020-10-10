@@ -14,6 +14,7 @@ import HoldPageEntry from "./pages/HoldPageEntry";
 import ReturnPage from "./pages/ReturnPage";
 import ReturnPageEntry from "./pages/ReturnPageEntry";
 import LocationPage from "./pages/LocationPage";
+import PaymentPage from "./pages/PaymentPage";
 
 
 
@@ -50,6 +51,9 @@ const AppAuthPages: React.FC = () => {
       </Route>
       <Route exact path="/my/returnpage">
         <ReturnPage />
+      </Route>
+      <Route exact path="/my/paymentpage">
+        <PaymentPage />
       </Route>
       <Route exact path="/my/chatpage">
         <ChatPage />
