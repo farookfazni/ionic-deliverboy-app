@@ -17,14 +17,9 @@ import { useAuth } from "../auth";
 import { useParams } from "react-router";
 import { firestore } from "../firebase";
 import { Entry, toEntry } from "../model";
-import {
-  GoogleMap,
-  Marker,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 import { IonButton, IonLoading } from "@ionic/react";
 import { Geolocation, Geoposition } from "@ionic-native/geolocation";
-
 
 const containerStyle = {
   width: "400px",
@@ -42,14 +37,44 @@ const LocationPage: React.FC = () => {
   const [loading, setloading] = useState<boolean>(false);
   const [position, setposition] = useState<Geoposition>();
   const [button, setbutton] = useState(true);
+  const [state, setState] = useState<{ directions: any }>({
+    directions: undefined,
+  });
 
-  
+  const directionsService = new google.maps.DirectionsService();
+
+  const destination = {
+    lat: parseFloat(entry?.Latitude),
+    lng: parseFloat(entry?.Longitude),
+  };
 
   const getloaction = async () => {
     setloading(true);
+
     try {
       const position = await Geolocation.getCurrentPosition();
       setposition(position);
+      const origin = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+      directionsService.route(
+        {
+          origin: origin,
+          destination: destination,
+          travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            setState({
+              directions: result,
+            });
+          } else {
+            console.error(`error fetching directions ${result}`);
+          }
+        }
+      );
+
       setloading(false);
       setbutton(false);
     } catch (e) {
@@ -82,25 +107,23 @@ const LocationPage: React.FC = () => {
           <GoogleMap
             mapContainerStyle={containerStyle}
             zoom={16}
-            center={{ lat: parseFloat(entry?.Latitude), lng: parseFloat(entry?.Longitude) }}
+            center={{
+              lat: parseFloat(entry?.Latitude),
+              lng: parseFloat(entry?.Longitude),
+            }}
             options={{ zoomControl: true }}
             onClick={(event) => {
               console.log(event);
             }}
           >
             <Marker
-              position={{ lat:  parseFloat(entry?.Latitude), lng: parseFloat(entry?.Longitude) }}
+              position={{
+                lat: parseFloat(entry?.Latitude),
+                lng: parseFloat(entry?.Longitude),
+              }}
             />
-            {position && (
-              <Marker
-                position={{
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                }}
-              />
-            )}
 
-            <DirectionsRenderer />
+            <DirectionsRenderer directions={state.directions} />
           </GoogleMap>
         </div>
         {button && (
