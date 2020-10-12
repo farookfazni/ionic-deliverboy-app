@@ -36,6 +36,7 @@ import { firestore } from "../firebase";
 import { useAuth } from "../auth";
 import { Entry, toEntry } from "../model";
 import { useParams, useHistory } from "react-router";
+import { CallNumber } from '@ionic-native/call-number';
 
 interface RouteParams {
   id: string;
@@ -81,6 +82,10 @@ const HoldPageEntry: React.FC = () => {
     return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)));
   }, [userId]);
 
+  function Call(Contact : string) {
+    CallNumber.callNumber(Contact,true);
+  }
+
   return (
     <IonPage className="dashboard-page">
       <IonHeader>
@@ -125,7 +130,7 @@ const HoldPageEntry: React.FC = () => {
                         </IonLabel>
                       </IonItem>
                       <IonItemOptions side="start">
-                        <IonItemOption color="success">Call</IonItemOption>
+                        <IonItemOption color="success" onClick={()=>{Call(entry.Contact_no.toString())}} >Call</IonItemOption>
                       </IonItemOptions>
                       <IonItemOptions side="end">
                         <IonItemOption color="primary">Message</IonItemOption>

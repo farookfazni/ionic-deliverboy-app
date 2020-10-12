@@ -36,6 +36,7 @@ import { Entry, toEntry } from "../model";
 import { useParams, useHistory } from "react-router";
 import { useAuth } from "../auth";
 import { firestore } from "../firebase";
+import { CallNumber } from '@ionic-native/call-number';
 
 interface RouteParams {
   id: string;
@@ -77,6 +78,10 @@ const DeliveryEntryPge: React.FC = () => {
       .doc(id);
     entryRef.get().then((doc) => setEntry(toEntry(doc)));
   }, [userId, id]);
+
+  function Call(Contact : string) {
+    CallNumber.callNumber(Contact,true);
+  }
 
   return (
     <IonPage className="dashboard-page">
@@ -124,7 +129,7 @@ const DeliveryEntryPge: React.FC = () => {
                       </IonLabel>
                     </IonItem>
                     <IonItemOptions side="start">
-                      <IonItemOption color="success">Call</IonItemOption>
+                      <IonItemOption color="success" onClick={()=>{Call(entry.Contact_no.toString())}} >Call</IonItemOption>
                     </IonItemOptions>
                     <IonItemOptions side="end">
                       <IonItemOption color="primary">Message</IonItemOption>
