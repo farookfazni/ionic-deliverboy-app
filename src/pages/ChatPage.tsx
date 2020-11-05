@@ -13,6 +13,7 @@ import {
   IonRow,
   IonCol,
   IonButton,
+  IonFooter,
 } from "@ionic/react";
 import React from "react";
 import "./Home.css";
@@ -33,7 +34,8 @@ const ChatPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent></IonContent>
+      <IonFooter>
         <IonGrid>
           <IonRow>
             <IonCol size="10">
@@ -43,12 +45,12 @@ const ChatPage: React.FC = () => {
             </IonCol>
             <IonCol size="2">
               <IonButton fill="clear" color="deliveryboy">
-                <IonIcon slot="icon-only"  icon={sendIcon} color="deliveryboy" />
+                <IonIcon slot="icon-only" icon={sendIcon} color="deliveryboy" />
               </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
-      </IonContent>
+      </IonFooter>
     </IonPage>
   );
 };

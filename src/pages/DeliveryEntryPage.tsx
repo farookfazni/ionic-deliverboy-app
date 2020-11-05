@@ -36,7 +36,7 @@ import { Entry, toEntry } from "../model";
 import { useParams, useHistory } from "react-router";
 import { useAuth } from "../auth";
 import { firestore } from "../firebase";
-import { CallNumber } from '@ionic-native/call-number';
+import { CallNumber } from "@ionic-native/call-number";
 
 interface RouteParams {
   id: string;
@@ -55,7 +55,7 @@ const DeliveryEntryPge: React.FC = () => {
     try {
       const StatusData = {
         Status,
-        Dateadded:today,
+        Dateadded: today,
       };
       await firestore
         .collection("users")
@@ -79,8 +79,8 @@ const DeliveryEntryPge: React.FC = () => {
     entryRef.get().then((doc) => setEntry(toEntry(doc)));
   }, [userId, id]);
 
-  function Call(Contact : string) {
-    CallNumber.callNumber(Contact,true);
+  function Call(Contact: string) {
+    CallNumber.callNumber(Contact, true);
   }
 
   return (
@@ -129,7 +129,14 @@ const DeliveryEntryPge: React.FC = () => {
                       </IonLabel>
                     </IonItem>
                     <IonItemOptions side="start">
-                      <IonItemOption color="success" onClick={()=>{Call(entry.Contact_no.toString())}} >Call</IonItemOption>
+                      <IonItemOption
+                        color="success"
+                        onClick={() => {
+                          Call(entry.Contact_no.toString());
+                        }}
+                      >
+                        Call
+                      </IonItemOption>
                     </IonItemOptions>
                     <IonItemOptions side="end">
                       <IonItemOption color="primary">Message</IonItemOption>
@@ -172,6 +179,16 @@ const DeliveryEntryPge: React.FC = () => {
                 <IonSelectOption value="New Order">New Order</IonSelectOption>
               </IonSelect>
             </IonItem>
+            <IonItem color="dark" mode="ios" lines="none">
+              <IonLabel>If status is Hold or Return</IonLabel>
+            </IonItem>
+            <IonButton
+              fill="solid"
+              expand="block"
+              routerLink={`/my/holdentrypage/${entry?.id}`}
+            >
+              Reason
+            </IonButton>
             {error && <IonText color="danger">Select Status</IonText>}
             <IonButton
               fill="solid"
